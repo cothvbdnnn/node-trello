@@ -6,7 +6,8 @@ const Board = new Schema(
   {
     title: {
       type: String,
-      require: true,
+      trim: true,
+      required: true,
       minLength: 3,
       maxLength: 20,
     },
@@ -24,4 +25,4 @@ const Board = new Schema(
   }
 )
 
-export default mongoose.model('Board', Board, 'boards')
+export const BoardModel = mongoose.model('Board', Board, 'boards')

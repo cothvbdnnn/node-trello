@@ -6,7 +6,7 @@ export const connect = async () => {
     await mongoose.connect(env.MONGODB_URI, {
       dbName: env.DATABASE_NAME,
     })
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(error)
   }
 }
