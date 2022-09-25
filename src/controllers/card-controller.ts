@@ -1,31 +1,31 @@
-import { ColumnService } from './../services/column-service';
+import { CardService } from './../services/card-service';
 import { Request, Response } from 'express';
 import { httpStatusCode } from '../config/constants';
 
-class ColumnController {
+class CardController {
 
   /**
-   * @path /columns
+   * @path /cards
    * @method GET
    */
 
-  async getColumns(req: Request, res: Response) {
+  async getCards(req: Request, res: Response) {
     try {
-      const columns = await ColumnService.getColumns()
-      res.status(httpStatusCode.OK).json(columns)
+      const cards = await CardService.getCards()
+      res.status(httpStatusCode.OK).json(cards)
     } catch (error) {
       res.status(httpStatusCode.INTERNAL_SERVER).json(error)
     }
   }
 
   /**
-   * @path /columns/create
+   * @path /cards/create
    * @method POST
    */
 
-  async createColumn(req: Request, res: Response) {
+  async createCard(req: Request, res: Response) {
     try {
-      const result = await ColumnService.createColumn(req.body)
+      const result = await CardService.createCard(req.body)
       res.status(httpStatusCode.OK).json(result)
     } catch (error) {
       res.status(httpStatusCode.INTERNAL_SERVER).json(error)
@@ -33,13 +33,13 @@ class ColumnController {
   }
 
   /**
- * @path /columns/:id/update
+ * @path /cards/:id/update
  * @method PUT
  */
 
-  async updateColumn(req: Request, res: Response) {
+  async updateCard(req: Request, res: Response) {
     try {
-      const result = await ColumnService.updateColumn(req.params.id, req.body)
+      const result = await CardService.updateCard(req.params.id, req.body)
       res.status(httpStatusCode.OK).json(result)
     } catch (error) {
       res.status(httpStatusCode.INTERNAL_SERVER).json(error)
@@ -47,4 +47,4 @@ class ColumnController {
   }
 }
 
-export default new ColumnController
+export default new CardController

@@ -17,7 +17,20 @@ const createColumn = async (data: {}) => {
   }
 }
 
+const updateColumn = async (id: string, data: {}) => {
+  try {
+    return ColumnModel.findOneAndUpdate(
+      { _id: id },
+      { $set: data },
+      { returnOriginal: false },
+    )
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
+
 export const ColumnService = {
   getColumns,
   createColumn,
+  updateColumn,
 }
