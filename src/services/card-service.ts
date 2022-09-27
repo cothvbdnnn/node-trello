@@ -8,7 +8,7 @@ const getCards = async () => {
   }
 }
 
-const createCard = async (data: {}) => {
+const createCard = async ({ data }: { data: {} }) => {
   try {
     const card = new CardModel(data)
     return card.save()
@@ -17,10 +17,10 @@ const createCard = async (data: {}) => {
   }
 }
 
-const updateCard = async (id: string, data: {}) => {
+const updateCard = async ({ cardId, data }: { cardId: string, data: {} }) => {
   try {
     return CardModel.findOneAndUpdate(
-      { _id: id },
+      { _id: cardId },
       { $set: data },
       { returnOriginal: false },
     )

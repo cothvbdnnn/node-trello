@@ -11,10 +11,10 @@ const Board = new Schema(
       minLength: 3,
       maxLength: 20,
     },
-    columnOrder: {
-      type: Array,
-      default: [],
-    },
+    columns: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Column'
+    }],
     _destroy: {
       type: Boolean,
       default: false,

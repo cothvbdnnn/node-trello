@@ -25,7 +25,21 @@ class BoardController {
 
   async createBoard(req: Request, res: Response) {
     try {
-      const result = await BoardService.createBoard(req.body)
+      const result = await BoardService.createBoard({ data: req.body })
+      res.status(httpStatusCode.OK).json(result)
+    } catch (error) {
+      res.status(httpStatusCode.INTERNAL_SERVER).json(error)
+    }
+  }
+
+  /**
+ * @path /boards/:id
+ * @method GET
+ */
+
+  async getBoardDetail(req: Request, res: Response) {
+    try {
+      const result = await BoardService.getBoardDetail({ boardId: req.params.id })
       res.status(httpStatusCode.OK).json(result)
     } catch (error) {
       res.status(httpStatusCode.INTERNAL_SERVER).json(error)

@@ -1,3 +1,4 @@
+import { BoardService } from './../services/board-service';
 import { ColumnService } from './../services/column-service';
 import { Request, Response } from 'express';
 import { httpStatusCode } from '../config/constants';
@@ -25,8 +26,12 @@ class ColumnController {
 
   async createColumn(req: Request, res: Response) {
     try {
-      const result = await ColumnService.createColumn(req.body)
-      res.status(httpStatusCode.OK).json(result)
+      const newColumn = await ColumnService.createColumn({ data: req.body })
+      await BoardService.pushColumn({
+        boardId: newColumn?.boardId?.toString(),
+        columnId: newColumn?._id?.toString()
+      });
+      res.status(httpStatusCode.OK).json(newColumn)
     } catch (error) {
       res.status(httpStatusCode.INTERNAL_SERVER).json(error)
     }
@@ -39,7 +44,21 @@ class ColumnController {
 
   async updateColumn(req: Request, res: Response) {
     try {
-      const result = await ColumnService.updateColumn(req.params.id, req.body)
+      const result = await ColumnService.updateColumn({ columnId: req.params.id, data: req.body })
+      res.status(httpStatusCode.OK).json(result)
+    } catch (error) {
+      res.status(httpStatusCode.INTERNAL_SERVER).json(error)
+    }
+  }
+
+  /**
+ * @path /columns/:id
+ * @method GET
+ */
+
+  async getColumnDetail(req: Request, res: Response) {
+    try {
+      const result = await ColumnService.getColumnDetail({ columnId: req.params.id })
       res.status(httpStatusCode.OK).json(result)
     } catch (error) {
       res.status(httpStatusCode.INTERNAL_SERVER).json(error)
