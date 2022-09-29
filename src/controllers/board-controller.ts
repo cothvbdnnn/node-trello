@@ -40,7 +40,7 @@ class BoardController {
   async getBoardDetail(req: Request, res: Response) {
     try {
       const result = await BoardService.getBoardDetail({ boardId: req.params.id })
-      res.status(httpStatusCode.OK).json(result)
+      res.status(httpStatusCode.OK).json(result?.[0])
     } catch (error) {
       res.status(httpStatusCode.INTERNAL_SERVER).json(error)
     }

@@ -1,7 +1,8 @@
-import api from './routes';
 import express from 'express'
+import api from './routes';
 import { connect } from './config/mongoose';
 import { env } from './config/environment'
+import { configCors } from './config/cors';
 
 connect()
   .then((res) => {
@@ -15,6 +16,8 @@ connect()
 
 const bootServer = () => {
   const app = express()
+
+  configCors(app)
 
   app.use(express.urlencoded({
     extended: true,
