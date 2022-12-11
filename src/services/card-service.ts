@@ -17,6 +17,14 @@ const createCard = async ({ data }: { data: {} }) => {
   }
 }
 
+const deleteCard = async ({ cardId }: { cardId: string }) => {
+  try {
+    return CardModel.deleteOne({ _id: cardId });
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
+
 const updateCard = async ({ cardId, data }: { cardId: string, data: {} }) => {
   try {
     return CardModel.findOneAndUpdate(
@@ -32,5 +40,6 @@ const updateCard = async ({ cardId, data }: { cardId: string, data: {} }) => {
 export const CardService = {
   getCards,
   createCard,
+  deleteCard,
   updateCard,
 }

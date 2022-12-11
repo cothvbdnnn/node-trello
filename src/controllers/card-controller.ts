@@ -38,6 +38,20 @@ class CardController {
   }
 
   /**
+  * @path /cards/:id/update
+  * @method PUT
+  */
+
+  async deleteCard(req: Request, res: Response) {
+    try {
+      const result = await CardService.deleteCard({ cardId: req.params.id })
+      res.status(httpStatusCode.OK).json(result)
+    } catch (error) {
+      res.status(httpStatusCode.INTERNAL_SERVER).json(error)
+    }
+  }
+
+  /**
  * @path /cards/:id/update
  * @method PUT
  */

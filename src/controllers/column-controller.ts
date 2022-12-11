@@ -1,3 +1,4 @@
+
 import { BoardService } from './../services/board-service';
 import { ColumnService } from './../services/column-service';
 import { Request, Response } from 'express';
@@ -20,7 +21,7 @@ class ColumnController {
   }
 
   /**
-   * @path /columns/create
+   * @path /columns
    * @method POST
    */
 
@@ -31,6 +32,20 @@ class ColumnController {
         boardId: newColumn?.boardId?.toString(),
         columnId: newColumn?._id?.toString()
       });
+      res.status(httpStatusCode.OK).json(newColumn)
+    } catch (error) {
+      res.status(httpStatusCode.INTERNAL_SERVER).json(error)
+    }
+  }
+
+  /**
+ * @path /columns/:id
+ * @method DELETE
+ */
+
+  async deleteColumn(req: Request, res: Response) {
+    try {
+      const newColumn = await ColumnService.deleteColumn({ columnId: req.params.id })
       res.status(httpStatusCode.OK).json(newColumn)
     } catch (error) {
       res.status(httpStatusCode.INTERNAL_SERVER).json(error)

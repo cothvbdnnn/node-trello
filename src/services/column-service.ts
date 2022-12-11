@@ -38,6 +38,15 @@ const pushCard = async ({ columnId, cardId }: { columnId: string, cardId: string
   }
 }
 
+const deleteColumn = async ({ columnId }: { columnId: string }) => {
+  try {
+    return ColumnModel.deleteOne({ _id: columnId })
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
+
+
 const updateColumn = async ({ columnId, data }: { columnId: string, data: {} }) => {
   try {
     return ColumnModel.findOneAndUpdate(
@@ -55,5 +64,6 @@ export const ColumnService = {
   getColumnDetail,
   createColumn,
   pushCard,
+  deleteColumn,
   updateColumn,
 }
