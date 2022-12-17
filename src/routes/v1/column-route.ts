@@ -8,5 +8,6 @@ router.post('/', ColumnController.createColumn)
 router.get('/:id', ColumnController.getColumnDetail)
 router.delete('/:id', ColumnController.deleteColumn)
 router.put('/:id', ColumnController.updateColumn)
+router.put('/:id/swap-card', ColumnController.swapCard)
 
 export default router

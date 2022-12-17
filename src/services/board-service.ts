@@ -36,6 +36,39 @@ const pushColumn = async ({ boardId, columnId }: { boardId: string, columnId: st
   }
 }
 
+const pullColumn = async ({ boardId, columnId }: { boardId: string, columnId: string }) => {
+  try {
+    const result = await BoardModel.findOneAndUpdate(
+      { _id: boardId },
+      { $pull: { columns: columnId } },
+      { returnOriginal: false },
+    )
+    return result
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
+
+const swapColumn = async ({ boardId, data }: { boardId: string, data: { oldIndex: number, newIndex: number } }) => {
+  try {
+    const oldIndexColumn = `columns.${data?.oldIndex}`
+    const newIndexColumn = `columns.${data?.newIndex}`
+    const boardSelected = await BoardModel.find({ _id: boardId })
+    const result = await BoardModel.update(
+      { _id: boardId },
+      {
+        $set: {
+          [oldIndexColumn]: boardSelected?.[0]?.columns?.[data?.newIndex],
+          [newIndexColumn]: boardSelected?.[0]?.columns?.[data?.oldIndex],
+        },
+      }
+    )
+    return result
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
+
 const createBoard = async ({ data }: { data: {} }) => {
   try {
     const board = new BoardModel(data)
@@ -49,5 +82,7 @@ export const BoardService = {
   getBoards,
   createBoard,
   pushColumn,
+  pullColumn,
+  swapColumn,
   getBoardDetail,
 }

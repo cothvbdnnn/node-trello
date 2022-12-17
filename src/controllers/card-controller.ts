@@ -45,6 +45,10 @@ class CardController {
   async deleteCard(req: Request, res: Response) {
     try {
       const result = await CardService.deleteCard({ cardId: req.params.id })
+      await ColumnService.pullCard({
+        columnId: req.body.columnId,
+        cardId: req.params.id
+      });
       res.status(httpStatusCode.OK).json(result)
     } catch (error) {
       res.status(httpStatusCode.INTERNAL_SERVER).json(error)

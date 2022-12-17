@@ -19,13 +19,27 @@ class BoardController {
   }
 
   /**
-   * @path /boards/create
+   * @path /boards
    * @method POST
    */
 
   async createBoard(req: Request, res: Response) {
     try {
       const result = await BoardService.createBoard({ data: req.body })
+      res.status(httpStatusCode.OK).json(result)
+    } catch (error) {
+      res.status(httpStatusCode.INTERNAL_SERVER).json(error)
+    }
+  }
+
+  /**
+ * @path /boards/:id
+ * @method PUT
+ */
+
+  async swapColumn(req: Request, res: Response) {
+    try {
+      const result = await BoardService.swapColumn({ boardId: req.params.id, data: req.body })
       res.status(httpStatusCode.OK).json(result)
     } catch (error) {
       res.status(httpStatusCode.INTERNAL_SERVER).json(error)
