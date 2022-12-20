@@ -49,30 +49,28 @@ const pullColumn = async ({ boardId, columnId }: { boardId: string, columnId: st
   }
 }
 
-const swapColumn = async ({ boardId, data }: { boardId: string, data: { oldIndex: number, newIndex: number } }) => {
+const createBoard = async ({ data }: { data: {} }) => {
   try {
-    const oldIndexColumn = `columns.${data?.oldIndex}`
-    const newIndexColumn = `columns.${data?.newIndex}`
-    const boardSelected = await BoardModel.find({ _id: boardId })
-    const result = await BoardModel.update(
-      { _id: boardId },
-      {
-        $set: {
-          [oldIndexColumn]: boardSelected?.[0]?.columns?.[data?.newIndex],
-          [newIndexColumn]: boardSelected?.[0]?.columns?.[data?.oldIndex],
-        },
-      }
-    )
-    return result
+    const board = new BoardModel(data)
+    return board.save()
   } catch (error: any) {
     throw new Error(error)
   }
 }
 
-const createBoard = async ({ data }: { data: {} }) => {
+const updateBoard = async ({ boardId, data }: { boardId: string, data: { title: string, columns: [] } }) => {
   try {
-    const board = new BoardModel(data)
-    return board.save()
+    const result = await BoardModel.findOneAndUpdate(
+      { _id: boardId },
+      {
+        $set: {
+          title: data?.title,
+          columns: data?.columns
+        }
+      },
+      { returnOriginal: false },
+    )
+    return result
   } catch (error: any) {
     throw new Error(error)
   }
@@ -83,6 +81,6 @@ export const BoardService = {
   createBoard,
   pushColumn,
   pullColumn,
-  swapColumn,
   getBoardDetail,
+  updateBoard,
 }

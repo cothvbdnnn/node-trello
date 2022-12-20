@@ -1,7 +1,6 @@
 
 import { BoardService } from './../services/board-service';
 import { ColumnService } from './../services/column-service';
-import { CardService } from './../services/card-service';
 import { Request, Response } from 'express';
 import { httpStatusCode } from '../config/constants';
 
@@ -34,23 +33,6 @@ class ColumnController {
         columnId: newColumn?._id?.toString()
       });
       res.status(httpStatusCode.OK).json(newColumn)
-    } catch (error) {
-      res.status(httpStatusCode.INTERNAL_SERVER).json(error)
-    }
-  }
-
-  /**
-* @path /columns/:id/swap-card
-* @method PUT
-*/
-
-  async swapCard(req: Request, res: Response) {
-    try {
-      const result = await ColumnService.swapCard({
-        columnId: req.params.id,
-        data: req.body,
-      });
-      res.status(httpStatusCode.OK).json(result)
     } catch (error) {
       res.status(httpStatusCode.INTERNAL_SERVER).json(error)
     }

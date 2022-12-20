@@ -37,9 +37,9 @@ class BoardController {
  * @method PUT
  */
 
-  async swapColumn(req: Request, res: Response) {
+  async updateBoard(req: Request, res: Response) {
     try {
-      const result = await BoardService.swapColumn({ boardId: req.params.id, data: req.body })
+      const result = await BoardService.updateBoard({ boardId: req.params.id, data: req.body })
       res.status(httpStatusCode.OK).json(result)
     } catch (error) {
       res.status(httpStatusCode.INTERNAL_SERVER).json(error)

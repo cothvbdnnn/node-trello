@@ -6,6 +6,6 @@ const router = express.Router()
 router.get('/', BoardController.getBoards)
 router.post('/', BoardController.createBoard)
 router.get('/:id', BoardController.getBoardDetail)
-router.put('/:id/swap-column', BoardController.swapColumn)
+router.put('/:id', BoardController.updateBoard)
 
 export default router
